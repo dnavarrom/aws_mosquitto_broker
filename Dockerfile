@@ -15,6 +15,9 @@ RUN adduser --system --disabled-password --disabled-login mosquitto
 COPY config /mqtt/config
 VOLUME ["/mqtt/config", "/mqtt/data", "/mqtt/log"]
 
+RUN chmod -R 777 /mqtt/*
 
+#USER mosquitto
 EXPOSE 1883 9001
-CMD /usr/sbin/mosquitto -c /mqtt/config/mosquitto.conf
+#CMD ["/usr/sbin/mosquitto"]
+CMD ["/usr/sbin/mosquitto", "-c", "/mqtt/config/mosquitto.conf"]
