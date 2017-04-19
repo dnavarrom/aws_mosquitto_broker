@@ -1,7 +1,7 @@
 # aws_mosquitto_broker
 Docker Image for AWS IOT connected Mosquitto broker
 
-![url: https://s3.amazonaws.com/aws-iot-blog-assets/how-to-bridge-mosquitto-mqtt-broker-to-aws-iot/1-overview.png]({{site.baseurl}}/img/aws_broker.png)
+({{site.baseurl}}/tree/master/img/aws_broker.png)
 
 
 ### BASIC USAGE:
