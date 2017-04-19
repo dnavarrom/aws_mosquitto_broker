@@ -1,10 +1,9 @@
 # aws_mosquitto_broker
 Docker Image for AWS IOT connected Mosquitto broker
 
-({{site.baseurl}}/tree/master/img/aws_broker.png)
 
 
-### BASIC USAGE:
+### BASIC SETUP (offline broker):
 
 #### Configuring Persietence:
 
