@@ -18,16 +18,16 @@ Install AWS CLI from http://docs.aws.amazon.com/cli/latest/userguide/installing.
 
 Then run AWS Configure and put your Region, your Access Key and Acces Secret
 
-> aws configure
-> AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+` aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
 AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 Default region name [None]: us-west-2
-Default output format [None]: json
+Default output format [None]: json `
 
 
 ###Step 3: Create an IAM policy for the bridge
 
-> aws iot create-policy --policy-name bridge --policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Action": "iot:*","Resource": "*"}]}
+` aws iot create-policy --policy-name bridge --policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Action": "iot:*","Resource": "*"}]} `
 
 
 
@@ -36,55 +36,56 @@ Default output format [None]: json
 
 Place yourself in ./config/certs directory and create certificates and keys, note the certificate ARN
 
-> cd ./config/certs
->
-> sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key –region eu-central-1
+` cd ./config/certs
+
+ sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key –region eu-central-1 `
 
 
 
 List the certificate and copy the ARN in the form of arn:aws:iot:eu-central-1:0123456789:cert/xyzxyz
 
-> aws iot list-certificates
+` aws iot list-certificates `
 
 
 Attach the policy to your certificate
 
-> aws iot attach-principal-policy --policy-name bridge --principal REPLACE_ARN_CERT
+` aws iot attach-principal-policy --policy-name bridge --principal REPLACE_ARN_CERT `
 
 
 Add read permissions to private key and client cert
-> sudo chmod 644 ./config/certs/private.key
-> sudo chmod 644 ./config/certs/cert.crt
+` sudo chmod 644 ./config/certs/private.key
+ sudo chmod 644 ./config/certs/cert.crt `
 
 
 Download root CA certificate
 
->sudo wget https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem -O rootCA.pem
+` sudo wget https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem -O rootCA.pem `
 
 
 ### Step 5: Edit mosquitto custom config file 
 
 Rename awsbridge.conf.sample to awsbridge.conf
 
->mv ./config/conf.d/awsbridge.conf.sample ./config/conf.d/awsbridge.conf
+` mv ./config/conf.d/awsbridge.conf.sample ./config/conf.d/awsbridge.conf `
 
 Edit ./config/conf.d/awsbridge.conf and follow the awsbridge.conf instructions 
 
-> nano ./config/conf.d/awsbridge.conf
+` nano ./config/conf.d/awsbridge.conf `
 
 
 ### Step 6:  Build Docker File
 
-> docker build -t aws_mqtt_broker .
+` docker build -t aws_mqtt_broker . `
 
 ### Step 7: Run Docker Image
 
-> docker run -ti -p 1883:1883 -p 9001:9001 --name mqtt aws_mqtt_broker
+` docker run -ti -p 1883:1883 -p 9001:9001 --name mqtt aws_mqtt_broker `
 
 
 Result:
 
->1493564060: mosquitto version 1.4.10 (build date 2016-10-26 14:35:35+0000) starting
+`
+1493564060: mosquitto version 1.4.10 (build date 2016-10-26 14:35:35+0000) starting
 1493564060: Config loaded from /mosquitto/config/mosquitto.conf.
 1493564060: Opening ipv4 listen socket on port 1883.
 1493564060: Opening ipv6 listen socket on port 1883.
@@ -99,6 +100,7 @@ Result:
 1493564060: Received SUBACK from local.bridgeawsiot
 1493564061: Received UNSUBACK from local.bridgeawsiot
 1493564061: Received SUBACK from local.bridgeawsiot
+`
 
 
 ### Step 8: Test
@@ -112,7 +114,7 @@ Result:
 	- both_directions
 3.- Publish to awsiot_to_localgateway topic (hello world)
 4.- Review log or console output in our local broker for something like this: 
->1493564128: Received PUBLISH from local.bridgeawsiot (d0, q0, r0, m0, 'awsiot_to_localgateway', ... (45 bytes))
+`1493564128: Received PUBLISH from local.bridgeawsiot (d0, q0, r0, m0, 'awsiot_to_localgateway', ... (45 bytes)) `
 
 
 
@@ -120,7 +122,7 @@ Result:
 
 Flow: hostpc -> dockergateway -> aws
 
->mosquitto_pub -h localhost -p 1883 -q 1 -d -t localgateway_to_awsiot  -i clientid1 -m "{\"key\": \"helloFromLocalGateway\"}"
+`mosquitto_pub -h localhost -p 1883 -q 1 -d -t localgateway_to_awsiot  -i clientid1 -m "{\"key\": \"helloFromLocalGateway\"}"`
 
 
 #### references:
