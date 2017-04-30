@@ -1,7 +1,7 @@
 AWS Mosquitto Broker
 --------------------------------
 
-[![](https://images.microbadger.com/badges/image/mantgambl/aws_mosquitto_broker.svg)](https://microbadger.com/images/mantgambl/aws_mosquitto_broker "Get your own image badge on microbadger.com") 
+[![](https://images.microbadger.com/badges/image/mantgambl/aws_mosquitto_broker.svg)](https://microbadger.com/images/mantgambl/aws_mosquitto_broker "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/mantgambl/aws_mosquitto_broker.svg)](https://microbadger.com/images/mantgambl/aws_mosquitto_broker "Get your own version badge on microbadger.com")
 
 Docker Image for AWS IOT connected Mosquitto broker
