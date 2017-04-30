@@ -6,26 +6,31 @@ Docker Image for AWS IOT connected Mosquitto broker
 ![enter image description here](https://s3.amazonaws.com/aws-iot-blog-assets/how-to-bridge-mosquitto-mqtt-broker-to-aws-iot/1-overview.png)
 
 
-###Step 1: Setup AWS Account
+### Step 1: Setup AWS Account
 
-http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html#cli-signup
+Go to [AWS](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html#cli-signup) and setup the account
+
 
 Result: Acces Key + Access Secret
 
 ### Step 2: Install and Setup AWS CLI 
 
-Install AWS CLI from http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+Install AWS CLI from [here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 
 Then run AWS Configure and put your Region, your Access Key and Acces Secret
 
-` aws configure
-AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
-AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-Default region name [None]: us-west-2
-Default output format [None]: json `
+` aws configure `
+  
+` AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE `
+  
+` AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY `
+ 
+` Default region name [None]: us-west-2 `
+  
+` Default output format [None]: json `
 
 
-###Step 3: Create an IAM policy for the bridge
+### Step 3: Create an IAM policy for the bridge
 
 ` aws iot create-policy --policy-name bridge --policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Action": "iot:*","Resource": "*"}]} `
 
@@ -82,7 +87,7 @@ Edit ./config/conf.d/awsbridge.conf and follow the awsbridge.conf instructions
 ` docker run -ti -p 1883:1883 -p 9001:9001 --name mqtt aws_mqtt_broker `
 
 
-Result:
+Console / Log output:
 
 
 - 1493564060: mosquitto version 1.4.10 (build date 2016-10-26 14:35:35+0000) starting 
@@ -105,15 +110,20 @@ Result:
 
 ### Step 8: Test
 
+
 #### Publish from aws iot console
 
 1.- From AWS Management Console go to AWS IOT Services -> Test
+
 2.- Subscribe to topics mentioned in our config file
 	- awsiot_to_localgateway
 	- localgateway_to_awsiot
 	- both_directions
+
 3.- Publish to awsiot_to_localgateway topic (hello world)
+
 4.- Review log or console output in our local broker for something like this: 
+
 `1493564128: Received PUBLISH from local.bridgeawsiot (d0, q0, r0, m0, 'awsiot_to_localgateway', ... (45 bytes)) `
 
 
@@ -125,8 +135,8 @@ Flow: hostpc -> dockergateway -> aws
 `mosquitto_pub -h localhost -p 1883 -q 1 -d -t localgateway_to_awsiot  -i clientid1 -m "{\"key\": \"helloFromLocalGateway\"}"`
 
 
-#### references:
+### References:
 
-https://aws.amazon.com/es/blogs/iot/how-to-bridge-mosquitto-mqtt-broker-to-aws-iot/
+[AWS Mosquitto Guide](https://aws.amazon.com/es/blogs/iot/how-to-bridge-mosquitto-mqtt-broker-to-aws-iot/)
 
-https://github.com/toke/docker-mosquitto
+[Docker Mosquitto Image](https://github.com/toke/docker-mosquitto)
