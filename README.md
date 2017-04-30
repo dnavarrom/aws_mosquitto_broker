@@ -36,9 +36,9 @@ Default output format [None]: json `
 
 Place yourself in ./config/certs directory and create certificates and keys, note the certificate ARN
 
-` cd ./config/certs
+` cd ./config/certs `
 
- sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key –region eu-central-1 `
+` sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key –region eu-central-1 `
 
 
 
@@ -53,8 +53,8 @@ Attach the policy to your certificate
 
 
 Add read permissions to private key and client cert
-` sudo chmod 644 ./config/certs/private.key
- sudo chmod 644 ./config/certs/cert.crt `
+` sudo chmod 644 ./config/certs/private.key `
+` sudo chmod 644 ./config/certs/cert.crt  `
 
 
 Download root CA certificate
@@ -84,23 +84,23 @@ Edit ./config/conf.d/awsbridge.conf and follow the awsbridge.conf instructions
 
 Result:
 
-`
-1493564060: mosquitto version 1.4.10 (build date 2016-10-26 14:35:35+0000) starting
-1493564060: Config loaded from /mosquitto/config/mosquitto.conf.
-1493564060: Opening ipv4 listen socket on port 1883.
-1493564060: Opening ipv6 listen socket on port 1883.
-1493564060: Bridge local.bridgeawsiot doing local SUBSCRIBE on topic localgateway_to_awsiot
-1493564060: Bridge local.bridgeawsiot doing local SUBSCRIBE on topic both_directions
-1493564060: Connecting bridge awsiot (a3uewmymwlcmar.iot.us-east-1.amazonaws.com:8883)
-1493564060: Bridge bridgeawsiot sending CONNECT
-1493564060: Received CONNACK on connection local.bridgeawsiot.
-1493564060: Bridge local.bridgeawsiot sending SUBSCRIBE (Mid: 1, Topic: awsiot_to_localgateway, QoS: 1)
-1493564060: Bridge local.bridgeawsiot sending UNSUBSCRIBE (Mid: 2, Topic: localgateway_to_awsiot)
-1493564060: Bridge local.bridgeawsiot sending SUBSCRIBE (Mid: 3, Topic: both_directions, QoS: 1)
-1493564060: Received SUBACK from local.bridgeawsiot
-1493564061: Received UNSUBACK from local.bridgeawsiot
-1493564061: Received SUBACK from local.bridgeawsiot
-`
+
+- 1493564060: mosquitto version 1.4.10 (build date 2016-10-26 14:35:35+0000) starting 
+- 1493564060: Config loaded from /mosquitto/config/mosquitto.conf. 
+- 1493564060: Opening ipv4 listen socket on port 1883. 
+- 1493564060: Opening ipv6 listen socket on port 1883. 
+- 1493564060: Bridge local.bridgeawsiot doing local SUBSCRIBE on topic localgateway_to_awsiot 
+- 1493564060: Bridge local.bridgeawsiot doing local SUBSCRIBE on topic both_directions 
+- 1493564060: Connecting bridge awsiot (a3uewmymwlcmar.iot.us-east-1.amazonaws.com:8883) 
+- 1493564060: Bridge bridgeawsiot sending CONNECT 
+- 1493564060: Received CONNACK on connection local.bridgeawsiot. 
+- 1493564060: Bridge local.bridgeawsiot sending SUBSCRIBE (Mid: 1, Topic: awsiot_to_localgateway, QoS: 1) 
+- 1493564060: Bridge local.bridgeawsiot sending UNSUBSCRIBE (Mid: 2, Topic: localgateway_to_awsiot) 
+- 1493564060: Bridge local.bridgeawsiot sending SUBSCRIBE (Mid: 3, Topic: both_directions, QoS: 1) 
+- 1493564060: Received SUBACK from local.bridgeawsiot 
+- 1493564061: Received UNSUBACK from local.bridgeawsiot 
+- 1493564061: Received SUBACK from local.bridgeawsiot 
+
 
 
 ### Step 8: Test
