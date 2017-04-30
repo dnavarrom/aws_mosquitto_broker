@@ -1,0 +1,40 @@
+# =================================================================
+# Bridges to AWS IOT
+# =================================================================
+
+# AWS IoT endpoint, use AWS CLI 'aws iot describe-endpoint' and replace XXXX
+connection awsiot
+address xxxxxxxxx.iot.us-east-1.amazonaws.com:8883
+
+
+
+# Specifying which topics are bridged
+topic awsiot_to_localgateway in 1
+topic localgateway_to_awsiot out 1
+topic both_directions both 1
+
+# Setting protocol version explicitly
+bridge_protocol_version mqttv311
+bridge_insecure false
+
+# Bridge connection name and MQTT client Id,
+# enabling the connection automatically when the broker starts.
+cleansession true
+clientid bridgeawsiot
+start_type automatic
+notifications false
+log_type all
+
+# =================================================================
+# Certificate based SSL/TLS support
+# -----------------------------------------------------------------
+#Path to the rootCA
+
+bridge_cafile /mosquitto/config/certs/rootCA.pem
+
+# Path to the PEM encoded client certificate
+bridge_certfile /mosquitto/config/certs/cert.crt
+
+# Path to the PEM encoded client private key
+bridge_keyfile /mosquitto/config/certs/private.key
+

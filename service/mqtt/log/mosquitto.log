@@ -1,6 +1,0 @@
-1492627172: mosquitto version 1.4.11 (build date Mon, 20 Feb 2017 22:47:27 +0000) starting
-1492627172: Config loaded from /mqtt/config/mosquitto.conf.
-1492627172: Opening websockets listen socket on port 9001.
-1492627172: Opening ipv4 listen socket on port 1883.
-1492627172: Opening ipv6 listen socket on port 1883.
-1492627184: mosquitto version 1.4.11 terminating

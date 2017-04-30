@@ -1,23 +1,28 @@
-FROM debian:jessie
+FROM alpine:3.5
 
-MAINTAINER Thomas Kerpe <toke@toke.de>
+LABEL maintainer "diego.navarro.m@gmail.com"
+
+ARG BUILD_DATE
+ARG VCS_REF
+LABEL org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.docker.dockerfile="/Dockerfile" \
+    org.label-schema.name="aws-mosquitto-broker" \
+    org.label-schema.url="https://hub.docker.com/r/mantgambl/aws_mosquitto_broker/" \
+    org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.vcs-type="Git" \
+    org.label-schema.vcs-url="https://github.com/dnavarrom/aws_mosquitto_broker"
 
 
-RUN apt-get update && apt-get install -y wget
+RUN apk --no-cache add mosquitto=1.4.10-r2 && \
+    mkdir -p /mosquitto/config /mosquitto/data /mosquitto/log && \
+    #chmod -R 110 /mosquitto && \
+    chmod -R 777 /mosquitto && \
+    chown -R mosquitto:mosquitto /mosquitto
 
+    VOLUME ["/mosquitto/config", "/mosquitto/data", "/mosquitto/log"]
 
-RUN wget -q -O - http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | apt-key add -
-RUN wget -q -O /etc/apt/sources.list.d/mosquitto-jessie.list http://repo.mosquitto.org/debian/mosquitto-jessie.list
-RUN apt-get update && apt-get install -y mosquitto
-
-RUN adduser --system --disabled-password --disabled-login mosquitto
-
-COPY config /mqtt/config
-VOLUME ["/mqtt/config", "/mqtt/data", "/mqtt/log"]
-
-RUN chmod -R 777 /mqtt/*
-
-#USER mosquitto
-EXPOSE 1883 9001
-#CMD ["/usr/sbin/mosquitto"]
-CMD ["/usr/sbin/mosquitto", "-c", "/mqtt/config/mosquitto.conf"]
+COPY /config /mosquitto/config
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/usr/sbin/mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
