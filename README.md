@@ -141,6 +141,9 @@ Flow: hostpc -> dockergateway -> aws
 
 `mosquitto_pub -h localhost -p 1883 -q 1 -d -t localgateway_to_awsiot  -i clientid1 -m "{\"key\": \"helloFromLocalGateway\"}"`
 
+### Publish from arduino UNO / Mega with Ethernet Shield
+
+[Arduino Client](https://github.com/dnavarrom/aws_mqtt_arduino_uno)
 
 ## References:
 
