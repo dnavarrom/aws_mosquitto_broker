@@ -13,7 +13,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.vcs-url="https://github.com/dnavarrom/aws_mosquitto_broker"
 
 
-RUN apk --no-cache add mosquitto=1.4.10-r2 && \
+RUN apk --no-cache add mosquitto=1.4.12-r0 && \
     mkdir -p /mosquitto/config /mosquitto/data /mosquitto/log && \
     #chmod -R 110 /mosquitto && \
     chmod -R 777 /mosquitto && \
